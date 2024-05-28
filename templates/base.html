@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RTK-GUI{% endblock %}</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/main.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">Dashboard</a>
+        <a href="{{url_for ('about')}}">About</a>
+        <a href="{{ url_for('contact') }}">Contact Us</a>
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('profile')}}">{{ current_user.username }}</a>
+        <a href="{{ url_for ('logout')}}">Logout</a>
+        {% else %}
+        <a href="{{ url_for ('login')}}">Login</a>
+        <a href="{{ url_for ('register')}}">Register</a>
+
+        {% endif %}
+
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% block content %}
+    {% endblock %}
+    <div class="footer">
+        <img src="static/assets/imgs/image1.png" alt="University Logo">
+        <p>Department of Telecommunication Engineering<br>Faculty of Engineering<br>National University of Laos</p>    
+    </div>
+</body>
+</html>

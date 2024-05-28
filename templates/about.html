@@ -1,23 +1,30 @@
-this is about <nav aria-label="Page navigation">
-    <ul
-        class="pagination    "
-    >
-        <li class="page-item disabled">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+{% extends "base.html" %}
+{% block title %}RTK-GUI{% endblock %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+    <p><a href="{{ url_for('home') }}">Go to Dashboard</a></p>
+{% else %}
+    <p>You need to <a href="{{ url_for('login') }}">login</a> to access Dashboard</p>
+{% endif %}
+<h1>Seeding Robot Dashboard</h1>
+<p>ນີ້ແມ່ນໂປຣເຈັກຂອງນັກສຶກສາພາກວິຊາວິສະວະກຳເອເລັກໂຕຣນິກ ແລະ ໂທລະຄົມມະນາຄົມ ນຳພາໂດຍ ປອ.ໂພສີ ປານທອງສີ, ປທ. ເທ້ປາລະມີ ແລະ ປທ.ນາງ ຕິກ ແສງທິບພະນີ</p>
+<p>ນັກສຶກສາ</p>
+<li> ນາງ ປິ່ນແກ້ວ ເຂັມຄຳພູມີ</li>
+<li> ນາງ ສຸລິນຸພອນ ບູນທະວົງ</li>
+<li> ທ້າວ ສູລິຍະ ອ່ອນຟ້າ</li>
+<li> ທ້າວ ປັນຍານຸວົງ ເລັ່ງສະຫວັດ</li>
+
+<h3> Send us a message</h3>
+<form method="POST" action="/submit">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    <label for="email">your email</label>
+    <input type="email" id="email" name="email">
+    <label for="message">message</label>
+    <input type="text" id="message" name="message">
+    <input type="submit" value="Submit">
+</form>
+
+
+{% endblock %}

@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seeding Robot Dashboard</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/main.css') }}">
-</head>
-<body>
-    <div class="navbar">
-        <a href="/">Dashboard</a>
-        <a href="#">About</a>
-    </div>
+{% extends "base.html" %}
+{% block content %}
     <div class="container">
         <div class="header">
             <h1>Seeding Robot v.1 testing</h1>
@@ -51,11 +39,7 @@
                     loading="lazy"></iframe>
             </div>
         </div>
-        <div class="footer">
-            <img src="static/assets/imgs/image1.png" alt="University Logo">
-            <p>Department of Telecommunication Engineering<br>Faculty of Engineering<br>National University of Laos</p>
-            
-        </div>
+
     </div>
     
 <!-- leaflet js  -->
@@ -119,5 +103,5 @@
             }
         })();
 </script>
-</body>
-</html>
+
+{% endblock %}
