@@ -1,6 +1,13 @@
-from flask import Flask, redirect, render_template, request
+import os
+from flask import Flask, redirect, render_template, request, url_for, flash
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = os.getenv('KEY')
+secret_key = os.getenv('KEY')
+print(f'Secret Key: {secret_key}')
+
 
 @app.route('/')
 def home():
@@ -16,10 +23,13 @@ def contact():
 @app.route('/submit', methods=['POST'])
 def submit():
     name = request.form.get('name')
-    return f'Hello, {name}!'
+    flash('You were redirected to the login page.')
+
+    #return f'Hello, {name}!'
+    return redirect(url_for('home'))
 
 
-if __name__ == "__main__":
-    app.run()
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
