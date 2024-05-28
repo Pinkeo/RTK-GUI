@@ -1,5 +1,7 @@
-from flask import Flask, redirect, render_template, request
-from waitress import serve
+import os
+from flask import Flask, redirect, render_template, request, url_for, flash
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv('KEY')
