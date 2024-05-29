@@ -167,7 +167,7 @@ def contact():
         flash('Your message has been sent!', 'success')
         return redirect(url_for('home'))
     
-    return render_template('contact.html')
+    return render_template('about.html')
 
 @app.before_request
 def create_tables():
