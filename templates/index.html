@@ -30,6 +30,24 @@
                 <h3>Leaflet Map</h3>
                 <div id="map"></div>
             </div>
+            <script>
+                var map = L.map('map').setView([0, 0], 2);
+        
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+        
+                var marker = L.marker([0, 0]).addTo(map);
+        
+                var socket = io.connect('http://' + document.domain + ':' + location.port + '/ws');
+        
+                socket.on('update_map', function(data) {
+                    var lat = parseFloat(data.latitude);
+                    var lon = parseFloat(data.longitude);
+                    marker.setLatLng([lat, lon]);
+                    map.setView([lat, lon], 15);
+                });
+            </script>
 
             <div class="section seeding-point">
                 <h3>Seeding Point</h3>

@@ -14,6 +14,45 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from werkzeug.security import generate_password_hash, check_password_hash
 
+#test websocket
+from flask import jsonify
+from flask_socketio import SocketIO, emit
+
+app = Flask(__name__)
+socketio = SocketIO(app)
+
+# In-memory storage for GPS data
+gps_data = {'latitude': None, 'longitude': None}
+
+@app.route('/gps_data', methods=['GET'])
+def get_gps_data():
+    return jsonify(gps_data)
+
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
+
+@socketio.on('gps_data')
+def handle_gps_data(json_data):
+    global gps_data
+    gps_data = json_data
+    emit('update_map', gps_data, broadcast=True)
+
+
+
+###########################3
+
+
+
+
+
+
+
+
 load_dotenv()
 
 # Google Sheets API credentials
@@ -27,7 +66,6 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(GOOGLE_SHEET_CREDS, sco
 client = gspread.authorize(creds)
 sheet = client.open(GOOGLE_SHEET_NAME).sheet1
 
-app = Flask(__name__)
 app.secret_key = os.getenv('KEY')
 secret_key = os.getenv('KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = (
@@ -175,4 +213,5 @@ def create_tables():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    socketio.run(app)
 
